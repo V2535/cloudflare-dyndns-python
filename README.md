@@ -22,3 +22,7 @@ The script will only update Cloudflare, and post to Slack if your current IP dif
 {'success': True, 'name': 'dns4.example.com', 'content': '1.1.1.1'},
 {'slack_update': 'ok'}]
 ~~~
+
+#### Considerations for Python 3 environments lower than Python 3.6
+
+This script uses f-strings which were introduced in Python 3.6. If you are using a Python 3 version that does not support f-strings, you can either modify the script to use a supported method, or install a pip <https://pypi.org/project/future-fstrings/>. The script can be run with only adding `# -*- coding: future_fstrings -*-` to the top of the file.
