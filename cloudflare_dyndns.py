@@ -14,7 +14,7 @@ from settings import CLOUDFLARE_VARS, DNS_QUERY, SLACK_VARS
 def query_existing_ip():
     resolver = dns.resolver.Resolver()
     resolver.nameservers = DNS_QUERY["nameserver"]
-    query_host = resolver.query(DNS_QUERY["query_host"], "A")
+    query_host = resolver.resolve(DNS_QUERY["query_host"], "A")
     current_ip = [rdata.address for rdata in query_host][0]
     return current_ip
 
@@ -57,7 +57,7 @@ def main():
                 )
                 headers = {
                     "X-Auth-Email": CLOUDFLARE_VARS["USER_EMAIL"],
-                    "X-Auth-Key": CLOUDFLARE_VARS["API_KEY"],
+                    "Authorization": f"Bearer {CLOUDFLARE_VARS['API_KEY']}",
                     "Content-Type": "application/json",
                 }
                 payload = {"type": "A", "name": record["name"], "content": current_ip}
